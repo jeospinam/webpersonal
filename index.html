@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javier E. ospina M. · Ingeniero de Software</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/css.css">
+  </head> 
+<body>
+  <nav>
+    <div class="nav-logo">Javier<span>Ospina</span></div>
+    <ul class="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <section id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Me encuentro disponible para iniciar con tus proyectos</div>
+      <h1>Hola, soy<br><em>Javier</em></h1>
+      <p class="hero-subtitle">Ingeniero de software con diplomado en ciencias de la computación, con conocimientos en desarrollo de software, infraestructura, devops, gestión de proyectos. Tengo la Certificación SCRUM completa (Fundamentals, Scrum Master, Scrum Product Owner, Scrum Developer). Gobernanza de IT bajo ITIL v4.</p>
+      <div class="hero-ctas">
+        <a href="#proyectos" class="btn btn-primary">Ver proyectos →</a>
+        <a href="#contacto" class="btn btn-outline">Contáctame</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      Desliza hacia abajo
+    </div>
+  </section>
+
+  <section id="sobre-mi">
+    <div class="about-grid">
+      <div class="about-image-wrap reveal">
+        <div class="about-avatar">
+          <img src="images/foto_perfil.jpg" alt="Javier Ospina - Tu ingeniero de confianza" style="width:100%;height:100%;object-fit:cover"> 
+        </div>
+        <div class="about-badge">
+          <strong>15+</strong>
+          años de experiencia
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-label reveal">Quién soy</div>
+        <h2 class="reveal reveal-delay-1">Construyo software<br><em>con propósito</em></h2>
+        <p class="reveal reveal-delay-2">
+          Soy un Ingeniero de Software con más de 15 años de experiencia en el área de tecnologia, desempeñandome como desarrollador y responsbale de la infraestructura tecnologica. Me apasiona la intersección entre la ingeniería de calidad y la experiencia de usuario.
+        </p>
+        <p class="reveal reveal-delay-2">
+          Trabajo con equipos ágiles y creo en el código limpio, la arquitectura sólida y en hacer las cosas bien desde el principio. Fuera del teclado, me interesa el diseño de sistemas, la lectura técnica y el café de especialidad.
+        </p>
+
+        <!-- ****** Tecnologias que domino ****** -->
+        <div class="skills-tags reveal reveal-delay-3">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Oracle</span>
+          <span class="skill-tag">MySQL/MariaDB</span>
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Tableau</span>
+        </div>
+        <a href="#contacto" class="btn btn-primary reveal reveal-delay-3">Trabajemos juntos →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos">
+    <div class="projects-header">
+      <div class="section-label reveal">Portafolio</div>
+      <h2 class="reveal reveal-delay-1">Proyectos <em>recientes o en desarrollo</em></h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <h3>Ticketin</h3>
+        <p>Aplicación de ITSM básica desarrollada con python y fastAPI soportada por postgresSQL. Ofrece notificaciones por email, manejo de adjuntos a los tickets, manejo de ANS, multiples roles de usuario. Te permitira llevar una gestión clara y concisa de las incidencias y las solicitudes que se te presenten en tu empresa o pequeño negocio.</p>
+        <div class="project-techs">
+          <span class="project-tech">React</span>
+          <span class="project-tech">Node.js</span>
+          <span class="project-tech">PostgreSQL</span>
+          <span class="project-tech">Python</span>
+          <span class="project-tech">fastAPI</span>
+        </div>
+        <a href="#" class="project-link">Ver proyecto →</a>
+      </div>
+
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-num">02</div>
+        <h3>TEXTMANVidz</h3>
+        <p>Una aplicación simple de reproducción multimedia hecha usando tKinter y Python, con conversion entre varios formatos de video. Incluye un modulo para la descarga de tus videos desde youtube o solo el audio en mp3 si lo prefieres..</p>
+        <div class="project-techs">
+          <span class="project-tech">Python</span>
+          <span class="project-tech">tKinter</span>
+        </div>
+        <a href="#" class="project-link">Ver proyecto →</a>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-num">03</div>
+        <h3>MyOwnMoney</h3>
+        <p>Aplicación movil para android (proximamente disponible tambien para IOS) que te permitira llevar un registro detallado de tus finanzas mensuales. Sabras cuanto dinero te llega y cuanto gastas, discriminando por alimentación, entretenimiento, pago de servicios publicos, tarjetas de credito y mucho más generandote informes por periodos de tiempo, categorias de gastos o consumos individuales o totalizados por el grupo familiar.</p>
+        <div class="project-techs">
+          <span class="project-tech">Flutter/Dart</span>
+          <span class="project-tech">Supabase</span>
+          <span class="project-tech">MixPanel / Firebase Analytics</span>
+        </div>
+        <a href="#" class="project-link">Ver proyecto →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="contact-wrap">
+      <div class="section-label reveal">Hablemos</div>
+      <h2 class="reveal reveal-delay-1">¿Tienes un <em>proyecto</em><br>en mente?</h2>
+      <p class="contact-intro reveal reveal-delay-2">
+        Siempre estoy abierto a nuevas oportunidades, colaboraciones, ideas o simplemente a charlar sobre tecnología. Envíame un mensaje y tratare de responder en menos de 24 horas.
+      </p>
+
+      <form id="contact-form" class="reveal reveal-delay-2">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" name="name" placeholder="Tu nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Asunto</label>
+            <input type="text" id="subject" name="subject" placeholder="¿De qué se trata?" />
+          </div>
+        <!--
+          <div class="form-group">
+            <label for="budget">Presupuesto estimado</label>
+            <input type="text" id="budget" name="budget" placeholder="Ej: $5,000,000 – $10,000,000" />
+          </div>
+        -->
+          <div class="form-group full">
+            <label for="message">Mensaje</label>
+            <textarea id="message" name="message" placeholder="Cuéntame sobre tu proyecto o idea..." required></textarea>
+          </div>
+          <div class="form-group full form-submit">
+            <button type="submit" class="btn-submit" id="submit-btn">Enviar mensaje</button>
+          </div>
+        </div>
+        <div class="form-message" id="form-msg"></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Javier<span> Ospina</span></div>
+    <div class="footer-copy">© 2026 · Diseñado con cuidado y mucho cariño</div>
+    <div class="social-links">
+      <a href="#" class="social-link" title="GitHub">GH</a>
+      <a href="http://www.linkedin.com/in/javier-o-bb9b3934" class="social-link" title="LinkedIn">in</a>
+      <!-- <a href="#" class="social-link" title="Twitter/X">𝕏</a> -->
+    </div>
+  </footer>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
