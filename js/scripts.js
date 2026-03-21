@@ -1,12 +1,12 @@
 
-// ── Scroll reveal ──
+// Función para el scroll 
 const reveals = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
 }, { threshold: 0.12 });
 reveals.forEach(el => obs.observe(el));
 
-// ── Hero entrance ──
+// Hero entrance 
 document.addEventListener('DOMContentLoaded', () => {
   const heroItems = document.querySelectorAll('.hero-content > *');
   heroItems.forEach((el, i) => {
@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ── Formulario de contacto ──
-const form = document.getElementById('contact-form');
+// Formulario de contacto
+const form = document.getElementById('contacto-form');
 const submitBtn = document.getElementById('submit-btn');
-const formMsg = document.getElementById('form-msg');
+const formMsg = document.getElementById('form-msj');
 
 form.addEventListener('submit', async e => {
   e.preventDefault();
@@ -28,11 +28,11 @@ form.addEventListener('submit', async e => {
   submitBtn.textContent = 'Enviando...';
 
   const data = {
-    name:    form.name.value,
+    nombre:    form.nombre.value,
     email:   form.email.value,
-    subject: form.subject.value,
-    //budget:  form.budget.value,
-    message: form.message.value,
+    asunto: form.asunto.value,
+    //presupuesto:  form.presupuesto.value,
+    mensaje: form.mensaje.value,
   };
 
   // Envio de correo usando el servicio de Formspree
@@ -64,26 +64,26 @@ function showMsg(type, text) {
 }
 
 // Enlaces de navegación
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
+const secciones = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-enlaces a');
 window.addEventListener('scroll', () => {
   let current = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  secciones.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
   navLinks.forEach(a => { a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--accent)' : ''; });
 });
 
-// ── Menú hamburguesa ──
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.querySelector('.nav-links');
+// Menú hamburguesa para el responsive
+const hamburguesa = document.getElementById('hamburguesa');
+const navMenu = document.querySelector('.nav-enlaces');
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
+hamburguesa.addEventListener('click', () => {
+  hamburguesa.classList.toggle('open');
   navMenu.classList.toggle('open');
 });
 
 navMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
+    hamburguesa.classList.remove('open');
     navMenu.classList.remove('open');
   });
 });
