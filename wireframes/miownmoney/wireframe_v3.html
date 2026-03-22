@@ -1,0 +1,270 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f14; --surface: #17171f; --surface2: #1e1e28;
+    --border: rgba(255,255,255,0.07); --accent: #7c6ff7; --accent2: #4fd1a8;
+    --danger: #f06474; --text: #f0f0f5; --muted: #7a7a92; --muted2: #3a3a50;
+    --font: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace;
+  }
+  .wrapper { display:flex; flex-direction:column; align-items:center; padding:24px 0 32px; background:var(--bg); border-radius:16px; font-family:var(--font); }
+  .phone { width:320px; background:var(--surface); border-radius:36px; border:1.5px solid var(--border); overflow:hidden; box-shadow:0 40px 80px rgba(0,0,0,.6); }
+  .status-bar { height:40px; background:var(--surface); display:flex; align-items:center; justify-content:space-between; padding:0 22px; font-size:11px; color:var(--muted); font-weight:500; }
+  .notch { width:80px; height:20px; background:#000; border-radius:0 0 14px 14px; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .notch-dot { width:5px; height:5px; border-radius:50%; background:#1a1a1a; }
+  .notch-cam { width:10px; height:10px; border-radius:50%; background:#111; border:1px solid #222; }
+  .scroll-area { overflow-y:auto; max-height:520px; }
+  .scroll-area::-webkit-scrollbar { display:none; }
+  .screen-body { background:var(--bg); padding-bottom:16px; }
+  .s-header { padding:16px 20px 12px; background:var(--bg); }
+  .s-header-row { display:flex; align-items:center; justify-content:space-between; }
+  .s-title { font-size:18px; font-weight:600; color:var(--text); }
+  .s-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+  .icon-btn { width:34px; height:34px; border-radius:50%; background:var(--surface2); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:15px; color:var(--text); }
+  .sec-title { font-size:12px; font-weight:600; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; padding:0 20px 8px; }
+  .bottom-nav { background:var(--surface); border-top:1px solid var(--border); display:flex; padding:10px 0 14px; }
+  .nav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; }
+  .nav-ico { font-size:18px; } .nav-lbl { font-size:9px; font-weight:500; color:var(--muted); }
+  .nav-item.active .nav-lbl { color:var(--accent); }
+  .nav-item.active .nav-ico { filter:drop-shadow(0 0 6px var(--accent)); }
+  .fab { width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,var(--accent),#5e57d9); border:none; cursor:pointer; font-size:22px; color:#fff; box-shadow:0 4px 16px rgba(124,111,247,.45); margin-top:-4px; }
+
+  /* Group hero */
+  .group-hero { margin:0 16px 16px; background:var(--surface2); border-radius:20px; padding:18px; position:relative; overflow:hidden; }
+  .group-hero::before { content:''; position:absolute; top:-30px; right:-30px; width:100px; height:100px; border-radius:50%; background:rgba(124,111,247,.08); }
+  .group-total-label { font-size:10px; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px; }
+  .group-total { font-size:26px; font-weight:600; font-family:var(--mono); color:var(--text); letter-spacing:-.02em; }
+  .group-total-note { font-size:10px; margin-top:4px; display:flex; align-items:center; gap:4px; }
+
+  /* Callout box — clave del cambio */
+  .callout { margin:0 16px 16px; background:rgba(124,111,247,.1); border:1px solid rgba(124,111,247,.25); border-radius:14px; padding:11px 14px; display:flex; gap:10px; align-items:flex-start; }
+  .callout-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+  .callout-text { font-size:11px; color:var(--muted); line-height:1.6; }
+  .callout-text strong { color:var(--text); font-weight:500; }
+
+  /* Member cards */
+  .member-cards { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
+  .member-card { background:var(--surface2); border-radius:14px; padding:12px 14px; }
+  .member-card-row { display:flex; align-items:center; gap:12px; }
+  .mc-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:#fff; flex-shrink:0; }
+  .mc-info { flex:1; }
+  .mc-name { font-size:13px; font-weight:500; color:var(--text); }
+  .mc-role { font-size:10px; color:var(--muted); margin-top:1px; }
+  .mc-right { text-align:right; flex-shrink:0; }
+  .mc-bal { font-size:13px; font-weight:500; font-family:var(--mono); color:var(--text); }
+  .mc-hidden { font-size:13px; font-weight:500; font-family:var(--mono); color:var(--muted); letter-spacing:.1em; }
+  .mc-pct { font-size:10px; color:var(--muted); margin-top:1px; }
+  .pct-bar-wrap { margin:8px 0 0; }
+  .pct-bar-bg { height:4px; border-radius:2px; background:var(--muted2); overflow:hidden; }
+  .pct-bar-fill { height:100%; border-radius:2px; transition:width .4s ease; }
+
+  /* Privacy row */
+  .privacy-row { display:flex; align-items:center; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+  .privacy-label { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:5px; }
+  .toggle-wrap { position:relative; width:36px; height:20px; cursor:pointer; flex-shrink:0; }
+  .toggle-wrap input { opacity:0; width:0; height:0; position:absolute; }
+  .toggle-track { position:absolute; inset:0; border-radius:10px; background:var(--muted2); transition:background .2s; }
+  .toggle-wrap input:checked + .toggle-track { background:var(--accent2); }
+  .toggle-thumb { position:absolute; top:3px; left:3px; width:14px; height:14px; border-radius:50%; background:#fff; transition:transform .2s; pointer-events:none; }
+  .toggle-wrap input:checked ~ .toggle-thumb { transform:translateX(16px); }
+</style>
+
+<div class="wrapper">
+  <div class="phone">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="notch"><div class="notch-dot"></div><div class="notch-cam"></div><div class="notch-dot"></div></div>
+      <span>▲ 5G</span>
+    </div>
+
+    <div class="scroll-area">
+      <div class="screen-body">
+        <div class="s-header">
+          <div class="s-header-row">
+            <div>
+              <div class="s-title">Familia Ospina</div>
+              <div class="s-sub">3 miembros activos</div>
+            </div>
+            <button class="icon-btn">⚙</button>
+          </div>
+        </div>
+
+        <!-- Balance consolidado — siempre fijo -->
+        <div class="group-hero">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+            <div>
+              <div class="group-total-label">Balance consolidado del grupo</div>
+              <div class="group-total">$ 11.430.200</div>
+              <div class="group-total-note">
+                <span style="color:var(--accent2)">●</span>
+                <span style="font-size:10px;color:var(--muted)">Siempre incluye todos los miembros</span>
+              </div>
+            </div>
+            <div style="display:flex;margin-top:4px">
+              <div style="width:28px;height:28px;border-radius:50%;border:2px solid #1e1e28;background:#7c6ff7;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff">JO</div>
+              <div style="width:28px;height:28px;border-radius:50%;border:2px solid #1e1e28;background:#4fd1a8;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;margin-left:-6px">CS</div>
+              <div style="width:28px;height:28px;border-radius:50%;border:2px solid #1e1e28;background:#f5a742;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;margin-left:-6px">JS</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1;background:rgba(79,209,168,.1);border-radius:10px;padding:10px">
+              <div style="font-size:10px;color:var(--muted);margin-bottom:3px">↑ Ingresos</div>
+              <div style="font-size:13px;font-weight:500;font-family:var(--mono);color:var(--accent2)">$16.400.000</div>
+            </div>
+            <div style="flex:1;background:rgba(240,100,116,.1);border-radius:10px;padding:10px">
+              <div style="font-size:10px;color:var(--muted);margin-bottom:3px">↓ Gastos</div>
+              <div style="font-size:13px;font-weight:500;font-family:var(--mono);color:var(--danger)">$4.969.800</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Callout explicativo -->
+        <div class="callout">
+          <span class="callout-icon">🔒</span>
+          <span class="callout-text">
+            <strong>Privacidad de balance:</strong> ocultar tu balance evita que los demás vean tu cifra individual, pero tu dinero <strong>siempre se suma al total del grupo</strong>. El porcentaje de aporte también se oculta.
+          </span>
+        </div>
+
+        <div class="sec-title">Miembros</div>
+        <div class="member-cards">
+
+          <!-- Javier — visible, no puede ocultarse a sí mismo del total -->
+          <div class="member-card">
+            <div class="member-card-row">
+              <div class="mc-avatar" style="background:linear-gradient(135deg,#7c6ff7,#5e57d9)">JO</div>
+              <div class="mc-info">
+                <div class="mc-name">Javier Ospina</div>
+                <div class="mc-role">Admin · 3 cuentas</div>
+                <div class="pct-bar-wrap">
+                  <div class="pct-bar-bg"><div class="pct-bar-fill" id="bar-javier" style="width:37%;background:#7c6ff7"></div></div>
+                </div>
+              </div>
+              <div class="mc-right">
+                <div class="mc-bal" id="bal-javier">$4.285.900</div>
+                <div class="mc-pct" id="pct-javier">37% del total</div>
+              </div>
+            </div>
+            <div class="privacy-row">
+              <span class="privacy-label">👁 Mostrar mi balance</span>
+              <label class="toggle-wrap">
+                <input type="checkbox" checked id="toggle-javier" onchange="toggleMember('javier', this.checked)">
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Carolina — visible -->
+          <div class="member-card">
+            <div class="member-card-row">
+              <div class="mc-avatar" style="background:linear-gradient(135deg,#4fd1a8,#0F6E56)">CS</div>
+              <div class="mc-info">
+                <div class="mc-name">Carolina Sánchez</div>
+                <div class="mc-role">Miembro · 2 cuentas</div>
+                <div class="pct-bar-wrap">
+                  <div class="pct-bar-bg"><div class="pct-bar-fill" id="bar-carolina" style="width:47%;background:#4fd1a8"></div></div>
+                </div>
+              </div>
+              <div class="mc-right">
+                <div id="bal-carolina" class="mc-bal">$5.394.300</div>
+                <div id="pct-carolina" class="mc-pct">47% del total</div>
+              </div>
+            </div>
+            <div class="privacy-row">
+              <span class="privacy-label">👁 Mostrar mi balance</span>
+              <label class="toggle-wrap">
+                <input type="checkbox" checked id="toggle-carolina" onchange="toggleMember('carolina', this.checked)">
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Juan — oculto por defecto para demo -->
+          <div class="member-card">
+            <div class="member-card-row">
+              <div class="mc-avatar" style="background:linear-gradient(135deg,#f5a742,#854F0B)">JS</div>
+              <div class="mc-info">
+                <div class="mc-name">Juan Ospina</div>
+                <div class="mc-role">Miembro · 1 cuenta</div>
+                <div class="pct-bar-wrap">
+                  <div class="pct-bar-bg"><div class="pct-bar-fill" id="bar-juan" style="width:0%;background:#f5a742"></div></div>
+                </div>
+              </div>
+              <div class="mc-right">
+                <div id="bal-juan" class="mc-hidden">••••••</div>
+                <div id="pct-juan" class="mc-pct" style="color:var(--muted2)">oculto</div>
+              </div>
+            </div>
+            <div class="privacy-row">
+              <span class="privacy-label">👁 Mostrar mi balance</span>
+              <label class="toggle-wrap">
+                <input type="checkbox" id="toggle-juan" onchange="toggleMember('juan', this.checked)">
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Invitar -->
+          <div style="background:var(--surface2);border-radius:14px;padding:12px 14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:1.5px dashed var(--muted2)">
+            <span style="font-size:16px">➕</span>
+            <span style="font-size:13px;color:var(--muted);font-weight:500">Invitar miembro</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item"><span class="nav-ico">🏠</span><span class="nav-lbl">INICIO</span></div>
+      <div class="nav-item"><span class="nav-ico">🏦</span><span class="nav-lbl">CUENTAS</span></div>
+      <div class="nav-item" style="flex:1.2"><button class="fab">＋</button></div>
+      <div class="nav-item"><span class="nav-ico">📊</span><span class="nav-lbl">REPORTES</span></div>
+      <div class="nav-item active"><span class="nav-ico">👨‍👩‍👧</span><span class="nav-lbl">GRUPO</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Balances reales de cada miembro — SIEMPRE se suman al total
+  const BALANCES = { javier: 4285900, carolina: 5394300, juan: 1750000 };
+  const TOTAL    = Object.values(BALANCES).reduce((a, b) => a + b, 0); // Siempre fijo: 11.430.200
+  const COLORS   = { javier: '#7c6ff7', carolina: '#4fd1a8', juan: '#f5a742' };
+
+  // Estado de visibilidad inicial
+  const visible  = { javier: true, carolina: true, juan: false };
+
+  function toggleMember(name, show) {
+    visible[name] = show;
+    renderMember(name);
+  }
+
+  function renderMember(name) {
+    const show   = visible[name];
+    const bal    = BALANCES[name];
+    const pct    = Math.round(bal / TOTAL * 100); // Porcentaje sobre el TOTAL real, siempre
+
+    const balEl  = document.getElementById('bal-' + name);
+    const pctEl  = document.getElementById('pct-' + name);
+    const barEl  = document.getElementById('bar-' + name);
+
+    if (show) {
+      balEl.className  = 'mc-bal';
+      balEl.textContent = '$' + bal.toLocaleString('es-CO');
+      pctEl.textContent = pct + '% del total';
+      pctEl.style.color = '';
+      barEl.style.width = pct + '%';
+    } else {
+      balEl.className  = 'mc-hidden';
+      balEl.textContent = '••••••';
+      pctEl.textContent = 'oculto';
+      pctEl.style.color = 'var(--muted2)';
+      barEl.style.width = '0%';  // No muestra barra, pero el total no cambia
+    }
+  }
+
+  // Render inicial
+  Object.keys(BALANCES).forEach(renderMember);
+</script>
