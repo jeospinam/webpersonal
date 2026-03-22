@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ticketin — Wireframe Interactivo (Modo Oscuro)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif}
+:root{
+  --bg:#0F1117;--surface:#1A1E2E;--surface2:#222840;--border:#2A2F45;
+  --text:#E8EDF8;--muted:#9AA5BE;--hint:#5A6480;
+  --primary:#4A7FC1;--primary-dark:#1A56A0;--primary-light:#7AAEE0;
+  --secondary:#5AAF8C;--accent:#E57373;
+  --success:#81C784;--warning:#FFB74D;--error:#E57373;--info:#4FC3F7;
+}
+.app{display:flex;flex-direction:column;height:100vh;min-height:640px;background:var(--bg)}
+.navbar{display:flex;align-items:center;gap:12px;padding:0 20px;height:52px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
+.nav-logo{font-size:16px;font-weight:700;color:var(--primary-light);flex:1;letter-spacing:.5px}
+.nav-role{font-size:11px;color:var(--muted)}
+.nav-icon{width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--muted);position:relative}
+.nbadge{position:absolute;top:-3px;right:-3px;width:14px;height:14px;background:var(--error);border-radius:50%;font-size:9px;color:#fff;display:flex;align-items:center;justify-content:center}
+.avatar-nav{background:var(--primary-dark);color:var(--primary-light);font-size:11px;font-weight:700}
+.layout{display:flex;flex:1;overflow:hidden}
+.sidebar{width:215px;background:var(--surface);border-right:1px solid var(--border);padding:12px 8px;flex-shrink:0;overflow-y:auto}
+.user-info{padding:8px 8px 12px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.u-name{font-size:13px;font-weight:600;color:var(--text)}
+.u-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;margin-top:4px}
+.b-admin{background:#3C3489;color:#CECBF6}
+.b-agente{background:#0C447C;color:#B5D4F4}
+.b-solic{background:#27500A;color:#C0DD97}
+.rol-sel{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
+.r-btn{padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--muted)}
+.r-btn.on{background:var(--primary-dark);color:var(--primary-light);border-color:var(--primary)}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--muted);margin-bottom:2px}
+.nav-item:hover{background:var(--surface2)}
+.nav-item.on{background:var(--primary-dark);color:var(--primary-light)}
+.main{flex:1;overflow-y:auto;padding:20px;background:var(--bg)}
+.pg{display:none}.pg.on{display:block}
+.pg-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:3px}
+.pg-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px}
+.stat-l{font-size:11px;color:var(--muted);margin-bottom:5px}
+.stat-v{font-size:22px;font-weight:700}
+.sv-b{color:var(--info)}.sv-a{color:var(--warning)}.sv-g{color:var(--success)}.sv-r{color:var(--error)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.c-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.two{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:14px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.det-two{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;font-weight:600;color:var(--hint);padding:6px 8px;border-bottom:1px solid var(--border)}
+td{padding:8px;border-bottom:1px solid var(--border);color:var(--text);font-size:13px}
+tr:hover td{background:var(--surface2)}
+tr:last-child td{border-bottom:none}
+.chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.c-ab{background:#0C447C;color:#B5D4F4}.c-pr{background:#633806;color:#FAC775}
+.c-re{background:#27500A;color:#C0DD97}.c-ce{background:#2C2C2A;color:#B4B2A9}
+.c-es{background:#791F1F;color:#F7C1C1}.c-bl{background:#27500A;color:#C0DD97}
+.c-me{background:#0C447C;color:#B5D4F4}.c-al{background:#633806;color:#FAC775}.c-ur{background:#791F1F;color:#F7C1C1}
+.btn{padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text)}
+.btn:hover{background:var(--surface);border-color:var(--primary)}
+.btn-p{background:var(--primary-dark);color:var(--primary-light);border-color:var(--primary)}
+.btn-p:hover{background:var(--primary)}
+.btn-sm{padding:4px 10px;font-size:12px}
+.lnk{cursor:pointer;color:var(--info);font-size:12px;text-decoration:underline}
+.notif{padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)}
+.notif:last-child{border-bottom:none}
+.notif.unread{color:var(--text);font-weight:500}
+.notif-t{font-size:11px;color:var(--hint);margin-top:2px}
+.irow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
+.irow:last-child{border-bottom:none}
+.ilabel{color:var(--muted)}
+.av{width:28px;height:28px;border-radius:50%;background:var(--primary-dark);color:var(--primary-light);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cm-hd{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cm-auth{font-size:12px;font-weight:600;color:var(--text)}
+.cm-txt{font-size:13px;color:var(--muted);line-height:1.5}
+.cm-int{background:#412402;border-left:3px solid var(--warning);padding:6px 10px;border-radius:0 4px 4px 0;margin-top:4px}
+.cm-item{padding:10px 0;border-bottom:1px solid var(--border)}
+.cm-item:last-child{border-bottom:none}
+.ed-mock{border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:8px}
+.ed-bar{background:var(--surface2);padding:6px 8px;display:flex;gap:5px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.tb{padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--muted)}
+.ed-body{padding:8px;min-height:64px;font-size:13px;color:var(--hint)}
+.dz{border:2px dashed var(--border);border-radius:8px;padding:18px;text-align:center;color:var(--muted);font-size:13px;margin-bottom:10px}
+.fi{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:12px}
+.fi-ic{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.fi-img{background:#0C447C;color:#B5D4F4}.fi-doc{background:#27500A;color:#C0DD97}
+.fi-nm{flex:1;color:var(--text)}.fi-sz{color:var(--muted)}
+.fl{width:100%;padding:7px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:13px}
+.fl-l{font-size:12px;color:var(--muted);margin-bottom:4px;display:block}
+.fg{margin-bottom:12px}
+.sw{width:36px;height:20px;background:var(--secondary);border-radius:10px;position:relative;cursor:pointer;flex-shrink:0}
+.sw-d{width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px}
+.sw-off{background:var(--border)}.sw-off .sw-d{right:auto;left:2px}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:14px}
+.tab{padding:8px 16px;font-size:13px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent}
+.tab.on{color:var(--primary-light);border-bottom-color:var(--primary)}
+.bc{font-size:12px;color:var(--muted);margin-bottom:10px}
+.bc span{color:var(--info);cursor:pointer}
+.hist{display:flex;gap:6px;padding:5px 0;font-size:12px;align-items:center;border-bottom:1px solid var(--border)}
+.hist:last-child{border-bottom:none}
+.bars{display:flex;align-items:flex-end;gap:8px;height:78px;margin:8px 0}
+.bar{flex:1;border-radius:3px 3px 0 0}
+.bar-l{font-size:10px;color:var(--muted);text-align:center;margin-top:4px}
+.leg{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.leg-i{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
+.leg-d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.pb{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px}
+.pb-f{height:100%;background:var(--primary);border-radius:2px}
+.smtp-g{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:10px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="navbar">
+  <div class="nav-logo">TICKETIN</div>
+  <div class="nav-role" id="nrl">Administrador</div>
+  <div class="nav-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="nbadge">3</div></div>
+  <div class="nav-icon avatar-nav" id="avt">JO</div>
+</div>
+<div class="layout">
+<div class="sidebar">
+  <div class="user-info">
+    <div class="u-name" id="unm">Javier Ospina</div>
+    <div class="u-badge b-admin" id="ubg">Administrador</div>
+  </div>
+  <div class="rol-sel">
+    <div class="r-btn on" onclick="setRol('admin',this)">Admin</div>
+    <div class="r-btn" onclick="setRol('agente',this)">Agente</div>
+    <div class="r-btn" onclick="setRol('solic',this)">Solicitante</div>
+  </div>
+  <div class="nav-item on" onclick="go('dash')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</div>
+  <div class="nav-item" onclick="go('tickets')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/></svg>Solicitudes</div>
+  <div class="nav-item" id="ni-usr" onclick="go('usuarios')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Usuarios</div>
+  <div class="nav-item" id="ni-ans" onclick="go('ans')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>ANS</div>
+  <div class="nav-item" id="ni-rep" onclick="go('reportes')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Reportes</div>
+  <div class="nav-item" id="ni-adm" onclick="go('admin')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Administración</div>
+</div>
+<div class="main">
+
+<div class="pg on" id="pg-dash">
+  <div class="pg-title" id="dash-hi">Bienvenido, Javier</div>
+  <div class="pg-sub">Lunes, 17 de marzo de 2025</div>
+  <div class="stats" id="dash-stats">
+    <div class="stat"><div class="stat-l">Total solicitudes</div><div class="stat-v sv-b">48</div></div>
+    <div class="stat"><div class="stat-l">Abiertas</div><div class="stat-v sv-a">12</div></div>
+    <div class="stat"><div class="stat-l">En proceso</div><div class="stat-v sv-r">9</div></div>
+    <div class="stat"><div class="stat-l">Resueltas</div><div class="stat-v sv-g">21</div></div>
+  </div>
+  <div class="two">
+    <div>
+      <div class="card" id="dash-chart">
+        <div class="c-title">Solicitudes por prioridad</div>
+        <div class="bars">
+          <div style="flex:1;text-align:center"><div class="bar" style="height:42px;background:#3B6D11"></div><div class="bar-l">Baja</div></div>
+          <div style="flex:1;text-align:center"><div class="bar" style="height:62px;background:#185FA5"></div><div class="bar-l">Media</div></div>
+          <div style="flex:1;text-align:center"><div class="bar" style="height:48px;background:#BA7517"></div><div class="bar-l">Alta</div></div>
+          <div style="flex:1;text-align:center"><div class="bar" style="height:28px;background:#A32D2D"></div><div class="bar-l">Urgente</div></div>
+        </div>
+        <div class="leg">
+          <div class="leg-i"><div class="leg-d" style="background:#185FA5"></div>Total</div>
+          <div class="leg-i"><div class="leg-d" style="background:#BA7517"></div>Abiertas</div>
+          <div class="leg-i"><div class="leg-d" style="background:#3B6D11"></div>Resueltas</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="c-title">Solicitudes recientes <span class="lnk" onclick="go('tickets')">Ver todas</span></div>
+        <table><thead><tr><th>#</th><th>Título</th><th>Estado</th><th>Prioridad</th></tr></thead>
+        <tbody>
+          <tr style="cursor:pointer" onclick="go('detalle')"><td>#48</td><td>Error en módulo de facturación</td><td><span class="chip c-pr">En proceso</span></td><td><span class="chip c-ur">Urgente</span></td></tr>
+          <tr style="cursor:pointer" onclick="go('detalle')"><td>#47</td><td>Solicitud de acceso al sistema</td><td><span class="chip c-ab">Abierta</span></td><td><span class="chip c-me">Media</span></td></tr>
+          <tr style="cursor:pointer" onclick="go('detalle')"><td>#46</td><td>Actualización de datos de usuario</td><td><span class="chip c-re">Resuelta</span></td><td><span class="chip c-bl">Baja</span></td></tr>
+          <tr style="cursor:pointer" onclick="go('detalle')"><td>#45</td><td>Fallo en impresora de red</td><td><span class="chip c-pr">En proceso</span></td><td><span class="chip c-al">Alta</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="c-title">Notificaciones <span style="background:#791F1F;color:#F7C1C1;font-size:10px;padding:2px 6px;border-radius:10px">3</span></div>
+        <div class="notif unread"><div>Solicitud #48 asignada a ti</div><div class="notif-t">hace 10 min</div></div>
+        <div class="notif unread"><div>Nuevo comentario en solicitud #45</div><div class="notif-t">hace 35 min</div></div>
+        <div class="notif unread"><div>ANS vencido — solicitud #43</div><div class="notif-t">hace 2 horas</div></div>
+        <div class="notif"><div>Estado actualizado en solicitud #41</div><div class="notif-t">ayer</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pg" id="pg-tickets">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
+    <div><div class="pg-title">Solicitudes</div><div class="pg-sub">48 solicitudes encontradas</div></div>
+    <button class="btn btn-p btn-sm" id="btn-nva" onclick="go('nueva')">+ Nueva solicitud</button>
+  </div>
+  <div class="card" style="padding:10px 14px;margin-bottom:10px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <input class="fl" style="max-width:200px;padding:5px 10px" placeholder="Buscar por ID o título...">
+      <select class="fl" style="max-width:145px;padding:5px 10px"><option>Todos los estados</option><option>Abierta</option><option>En proceso</option><option>Resuelta</option><option>Cerrada</option></select>
+      <select class="fl" style="max-width:145px;padding:5px 10px"><option>Todas las prioridades</option><option>Baja</option><option>Media</option><option>Alta</option><option>Urgente</option></select>
+    </div>
+  </div>
+  <div class="card" style="padding:0">
+    <table><thead><tr><th style="padding:10px 12px">#</th><th>Título</th><th>Estado</th><th>Prioridad</th><th>Solicitante</th><th>Fecha</th><th></th></tr></thead>
+    <tbody>
+      <tr><td style="padding:10px 12px">#48</td><td>Error en módulo de facturación</td><td><span class="chip c-pr">En proceso</span></td><td><span class="chip c-ur">Urgente</span></td><td>Carolina S.</td><td style="color:var(--muted);font-size:12px">16/03/2025</td><td><span class="lnk" onclick="go('detalle')">Ver</span></td></tr>
+      <tr><td style="padding:10px 12px">#47</td><td>Solicitud de acceso al sistema SGC</td><td><span class="chip c-ab">Abierta</span></td><td><span class="chip c-me">Media</span></td><td>Ivonne O.</td><td style="color:var(--muted);font-size:12px">15/03/2025</td><td><span class="lnk" onclick="go('detalle')">Ver</span></td></tr>
+      <tr><td style="padding:10px 12px">#46</td><td>Actualización de datos corporativos</td><td><span class="chip c-re">Resuelta</span></td><td><span class="chip c-bl">Baja</span></td><td>Blanca M.</td><td style="color:var(--muted);font-size:12px">14/03/2025</td><td><span class="lnk" onclick="go('detalle')">Ver</span></td></tr>
+      <tr><td style="padding:10px 12px">#45</td><td>Fallo en impresora de red </td><td><span class="chip c-pr">En proceso</span></td><td><span class="chip c-al">Alta</span></td><td>Bernardo S.</td><td style="color:var(--muted);font-size:12px">13/03/2025</td><td><span class="lnk" onclick="go('detalle')">Ver</span></td></tr>
+      <tr><td style="padding:10px 12px">#44</td><td>Correo corporativo sin acceso</td><td><span class="chip c-es">Escalada</span></td><td><span class="chip c-ur">Urgente</span></td><td>Juan O.</td><td style="color:var(--muted);font-size:12px">12/03/2025</td><td><span class="lnk" onclick="go('detalle')">Ver</span></td></tr>
+      <tr><td style="padding:10px 12px">#43</td><td>Instalación de software contable</td><td><span class="chip c-ce">Cerrada</span></td><td><span class="chip c-me">Media</span></td><td>Ana D.</td><td style="color:var(--muted);font-size:12px">11/03/2025</td><td><span class="lnk" onclick="go('detalle')">Ver</span></td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<div class="pg" id="pg-detalle">
+  <div class="bc"><span onclick="go('tickets')">Solicitudes</span> › #48</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+    <div class="pg-title">Solicitud #48</div>
+    <div style="display:flex;gap:8px" id="det-act">
+      <button class="btn btn-sm">Cambiar estado</button>
+      <button class="btn btn-p btn-sm" id="btn-asig">Asignar agente</button>
+    </div>
+  </div>
+  <div class="det-two">
+    <div>
+      <div class="card">
+        <div style="display:flex;gap:8px;margin-bottom:10px"><span class="chip c-pr">En proceso</span><span class="chip c-ur">Urgente</span></div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:10px">Error en módulo de facturación</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">Al intentar generar una factura desde el módulo de ventas, el sistema lanza un error <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:12px;color:var(--info)">NullPointerException</code> en la línea 342.<br><br><span style="color:var(--text);font-weight:600">Pasos para reproducir:</span><br>1. Ir a Ventas → Nueva factura<br>2. Seleccionar cliente con NIT<br>3. El error aparece al hacer click en "Calcular"</div>
+      </div>
+      <div class="card">
+        <div class="c-title">Archivos adjuntos <span style="font-size:12px;font-weight:400;color:var(--muted)">2 archivos</span></div>
+        <div class="fi"><div class="fi-ic fi-img">IMG</div><div class="fi-nm">captura_error.png</div><div class="fi-sz">234 KB</div><span class="lnk">Descargar</span></div>
+        <div class="fi"><div class="fi-ic fi-doc">DOC</div><div class="fi-nm">reporte_incidente.docx</div><div class="fi-sz">48 KB</div><span class="lnk">Descargar</span></div>
+        <div id="dz-area"><div class="dz" style="margin-top:10px;padding:10px">Arrastra archivos aquí o <span style="color:var(--info);cursor:pointer">selecciona</span><br><span style="font-size:11px">JPG, PNG, PDF, Word, Excel — máx. 10 MB</span></div></div>
+      </div>
+      <div class="card">
+        <div class="c-title">Comentarios (2)</div>
+        <div class="cm-item">
+          <div class="cm-hd"><div class="av">CS</div><div><div class="cm-auth">Carolina Moreno — Agente</div><div style="font-size:11px;color:var(--hint)">16/03/2025 10:42</div></div></div>
+          <div class="cm-txt">Revisando el log del servidor. Parece ser un problema con la validación de NIT de más de 10 dígitos.</div>
+        </div>
+        <div class="cm-item">
+          <div class="cm-hd"><div class="av" style="background:#0F6E56">CM</div><div><div class="cm-auth">Juan Ospina — Solicitante</div><div style="font-size:11px;color:var(--hint)">16/03/2025 09:15</div></div><span style="background:#412402;color:var(--warning);font-size:10px;padding:1px 6px;border-radius:3px;margin-left:4px">Interno</span></div>
+          <div class="cm-txt cm-int">El problema también afecta a facturas de exportación. Adjunto log completo del servidor.</div>
+        </div>
+        <div class="ed-mock">
+          <div class="ed-bar"><div class="tb"><strong>B</strong></div><div class="tb"><em>I</em></div><div class="tb" style="text-decoration:underline">U</div><div class="tb">≡</div><div class="tb">IMG</div><div class="tb" style="margin-left:auto">🔓</div></div>
+          <div class="ed-body">Escribe un comentario... (soporta imágenes con Ctrl+V)</div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:8px"><button class="btn btn-p btn-sm">Comentar</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="c-title">Información</div>
+        <div class="irow"><span class="ilabel">Solicitante</span><span>Juan Ospina</span></div>
+        <div class="irow"><span class="ilabel">Agente</span><span>Carolina Moreno</span></div>
+        <div class="irow"><span class="ilabel">Creado</span><span style="font-size:12px">16/03/2025 08:30</span></div>
+        <div class="irow"><span class="ilabel">Actualizado</span><span style="font-size:12px">16/03/2025 10:42</span></div>
+        <div class="irow"><span class="ilabel">ANS límite</span><span style="color:var(--error);font-size:12px">16/03 09:30 ⚠</span></div>
+      </div>
+      <div class="card">
+        <div class="c-title">Historial de estados</div>
+        <div class="hist"><span class="chip c-ab" style="font-size:10px">Abierta</span><span style="color:var(--muted);padding:0 4px">→</span><span class="chip c-pr" style="font-size:10px">En proceso</span></div>
+        <div style="font-size:11px;color:var(--hint);padding:4px 0 6px">Carolina M. · 16/03 09:45 · Asignado para revisión</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pg" id="pg-nueva">
+  <div class="bc"><span onclick="go('tickets')">Solicitudes</span> › Nueva solicitud</div>
+  <div class="pg-title" style="margin-bottom:18px">Nueva Solicitud</div>
+  <div class="card" style="max-width:740px">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px;padding:6px 10px;background:var(--surface2);border-radius:6px">Paso 1 de 2 — Completa los detalles del problema o requerimiento</div>
+    <div class="fg"><label class="fl-l">Título *</label><input class="fl" placeholder="Describe brevemente el problema..." value="Error en módulo de facturación"></div>
+    <div class="fg"><label class="fl-l">Descripción * — editor enriquecido con imágenes inline</label>
+      <div class="ed-mock"><div class="ed-bar"><div class="tb"><strong>B</strong></div><div class="tb"><em>I</em></div><div class="tb" style="text-decoration:underline">U</div><div class="tb">≡</div><div class="tb">1.</div><div class="tb">IMG</div><div class="tb">🔗</div></div><div class="ed-body" style="min-height:90px">Describe el problema. Puedes pegar imágenes con Ctrl+V o usar el botón IMG.</div></div>
+    </div>
+    <div class="fg"><label class="fl-l">Prioridad *</label><select class="fl" style="max-width:300px"><option>Baja</option><option>Media</option><option selected>Alta — Impacto significativo</option><option>Urgente</option></select></div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="btn btn-sm" onclick="go('tickets')">Cancelar</button><button class="btn btn-p btn-sm" onclick="go('nueva2')">Crear solicitud →</button></div>
+  </div>
+</div>
+
+<div class="pg" id="pg-nueva2">
+  <div class="bc"><span onclick="go('tickets')">Solicitudes</span> › Nueva solicitud</div>
+  <div class="pg-title" style="margin-bottom:18px">Solicitud creada</div>
+  <div class="card" style="max-width:740px">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px;padding:6px 10px;background:var(--surface2);border-radius:6px">Paso 2 de 2 — Adjunta archivos de soporte si es necesario</div>
+    <div style="background:#173404;border-radius:6px;padding:10px 12px;color:var(--success);font-size:13px;margin-bottom:14px">La solicitud #49 fue creada correctamente.</div>
+    <div class="dz"><div style="font-size:22px;margin-bottom:6px;color:var(--hint)">↑</div>Arrastra archivos aquí o <span style="color:var(--info);cursor:pointer">haz click para seleccionar</span><br><span style="font-size:11px">JPG, PNG, PDF, Word, Excel, TXT — máx. 10 MB</span></div>
+    <div class="fi"><div class="fi-ic fi-img">IMG</div><div class="fi-nm">screenshot.png</div><div class="fi-sz">156 KB</div><div class="pb" style="flex:1"><div class="pb-f" style="width:100%"></div></div></div>
+    <div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="btn btn-p btn-sm" onclick="go('detalle')">Ir al detalle de la solicitud →</button></div>
+  </div>
+</div>
+
+<div class="pg" id="pg-usuarios">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px"><div><div class="pg-title">Usuarios</div><div class="pg-sub">6 usuarios registrados</div></div><button class="btn btn-p btn-sm">+ Nuevo usuario</button></div>
+  <div class="card" style="padding:10px 14px;margin-bottom:10px"><input class="fl" style="max-width:280px;padding:5px 10px" placeholder="Buscar por nombre o correo..."></div>
+  <div class="card" style="padding:0"><table><thead><tr><th style="padding:10px 12px">Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Registrado</th><th></th></tr></thead>
+  <tbody>
+    <tr><td style="padding:10px 12px">Javier Ospina</td><td style="font-size:12px">javier@jospina.net</td><td><span class="chip b-admin" style="font-size:10px">Administrador</span></td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td style="font-size:12px;color:var(--muted)">01/01/2025</td><td><span class="lnk">Editar</span></td></tr>
+    <tr><td style="padding:10px 12px">Carolina Sanchez</td><td style="font-size:12px">carolina@jospina.net</td><td><span class="chip b-agente" style="font-size:10px">Agente</span></td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td style="font-size:12px;color:var(--muted)">05/01/2025</td><td><span class="lnk">Editar</span></td></tr>
+    <tr><td style="padding:10px 12px">Juan Ospina</td><td style="font-size:12px">juan@jospina.net</td><td><span class="chip b-agente" style="font-size:10px">Agente</span></td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td style="font-size:12px;color:var(--muted)">10/01/2025</td><td><span class="lnk">Editar</span></td></tr>
+    <tr><td style="padding:10px 12px">Ivonne Malagón</td><td style="font-size:12px">ivonne@jospina.net</td><td><span class="chip b-solic" style="font-size:10px">Solicitante</span></td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td style="font-size:12px;color:var(--muted)">12/01/2025</td><td><span class="lnk">Editar</span></td></tr>
+    <tr><td style="padding:10px 12px">Blanca Ospina</td><td style="font-size:12px">blanca@jospina.net</td><td><span class="chip b-solic" style="font-size:10px">Solicitante</span></td><td><span style="color:var(--error);font-size:12px">○ Inactivo</span></td><td style="font-size:12px;color:var(--muted)">20/01/2025</td><td><span class="lnk">Editar</span></td></tr>
+  </tbody></table></div>
+</div>
+
+<div class="pg" id="pg-ans">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px"><div><div class="pg-title">Acuerdos de Nivel de Servicio</div><div class="pg-sub">Tiempos por prioridad</div></div><button class="btn btn-p btn-sm">+ Nuevo ANS</button></div>
+  <div class="card" style="padding:0"><table><thead><tr><th style="padding:10px 12px">Nombre</th><th>Prioridad</th><th>T. Respuesta</th><th>T. Resolución</th><th>Estado</th><th></th></tr></thead>
+  <tbody>
+    <tr><td style="padding:10px 12px">ANS Baja</td><td><span class="chip c-bl">Baja</span></td><td>24 horas</td><td>72 horas</td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td><span class="lnk">Editar</span></td></tr>
+    <tr><td style="padding:10px 12px">ANS Media</td><td><span class="chip c-me">Media</span></td><td>8 horas</td><td>24 horas</td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td><span class="lnk">Editar</span></td></tr>
+    <tr><td style="padding:10px 12px">ANS Alta</td><td><span class="chip c-al">Alta</span></td><td>4 horas</td><td>8 horas</td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td><span class="lnk">Editar</span></td></tr>
+    <tr><td style="padding:10px 12px">ANS Urgente</td><td><span class="chip c-ur">Urgente</span></td><td>1 hora</td><td>4 horas</td><td><span style="color:var(--success);font-size:12px">● Activo</span></td><td><span class="lnk">Editar</span></td></tr>
+  </tbody></table></div>
+</div>
+
+<div class="pg" id="pg-reportes">
+  <div class="pg-title">Reportes</div><div class="pg-sub">Estadísticas generales del sistema</div>
+  <div class="stats"><div class="stat"><div class="stat-l">Total solicitudes</div><div class="stat-v sv-b">48</div></div><div class="stat"><div class="stat-l">Abiertas</div><div class="stat-v sv-a">12</div></div><div class="stat"><div class="stat-l">En proceso</div><div class="stat-v sv-r">9</div></div><div class="stat"><div class="stat-l">Resueltas</div><div class="stat-v sv-g">21</div></div></div>
+  <div class="two">
+    <div class="card"><div class="c-title">Por prioridad</div><table><thead><tr><th>Prioridad</th><th>Total</th><th>Abiertas</th><th>Resueltas</th></tr></thead><tbody><tr><td><span class="chip c-bl">Baja</span></td><td>10</td><td>2</td><td>7</td></tr><tr><td><span class="chip c-me">Media</span></td><td>20</td><td>5</td><td>10</td></tr><tr><td><span class="chip c-al">Alta</span></td><td>13</td><td>4</td><td>3</td></tr><tr><td><span class="chip c-ur">Urgente</span></td><td>5</td><td>1</td><td>1</td></tr></tbody></table></div>
+    <div class="card"><div class="c-title">Por agente</div><table><thead><tr><th>Agente</th><th>Asignadas</th><th>Resueltas</th></tr></thead><tbody><tr><td>Jorge M.</td><td>18</td><td>12</td></tr><tr><td>María T.</td><td>15</td><td>9</td></tr></tbody></table></div>
+  </div>
+  <div class="card"><div class="c-title">Cumplimiento ANS</div><div class="three"><div style="text-align:center;padding:10px 0"><div style="font-size:26px;font-weight:700;color:var(--info)">33</div><div style="font-size:12px;color:var(--muted)">Solicitudes con ANS</div></div><div style="text-align:center;padding:10px 0"><div style="font-size:26px;font-weight:700;color:var(--success)">78%</div><div style="font-size:12px;color:var(--muted)">Cumplimiento respuesta</div></div><div style="text-align:center;padding:10px 0"><div style="font-size:26px;font-weight:700;color:var(--warning)">64%</div><div style="font-size:12px;color:var(--muted)">Cumplimiento resolución</div></div></div></div>
+</div>
+
+<div class="pg" id="pg-admin">
+  <div class="pg-title">Administración</div><div class="pg-sub" style="margin-bottom:14px">Configuración, correo y auditoría</div>
+  <div class="card">
+    <div class="tabs"><div class="tab on" onclick="atab(0,this)">Configuración</div><div class="tab" onclick="atab(1,this)">Correo / SMTP</div><div class="tab" onclick="atab(2,this)">Auditoría</div></div>
+    <div id="at0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><button class="btn btn-sm" style="color:var(--warning);border-color:#633806"> Verificar ANS vencidos</button><button class="btn btn-p btn-sm">+ Nueva clave</button></div>
+      <table><thead><tr><th>Clave</th><th>Valor</th><th>Descripción</th><th></th></tr></thead><tbody>
+        <tr><td><code style="font-size:12px;color:var(--info)">app_nombre</code></td><td>Ticketin</td><td style="color:var(--muted);font-size:12px">Nombre de la aplicación</td><td><span class="lnk">Editar</span></td></tr>
+        <tr><td><code style="font-size:12px;color:var(--info)">app_version</code></td><td>1.0.0</td><td style="color:var(--muted);font-size:12px">Versión actual</td><td><span class="lnk">Editar</span></td></tr>
+        <tr><td><code style="font-size:12px;color:var(--info)">max_adjuntos</code></td><td>10</td><td style="color:var(--muted);font-size:12px">Máximo por solicitud</td><td><span class="lnk">Editar</span></td></tr>
+      </tbody></table>
+    </div>
+    <div id="at1" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;font-weight:600;color:var(--text)">Servidor de correo</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--muted)">Activo</span><div class="sw"><div class="sw-d"></div></div></div></div>
+      <div class="smtp-g" style="margin-bottom:12px"><div class="fg" style="margin-bottom:0"><label class="fl-l">Servidor SMTP</label><input class="fl" value="smtp.gmail.com"></div><div style="display:flex;gap:8px;align-items:flex-end"><div class="fg" style="margin-bottom:0;flex:1"><label class="fl-l">Puerto</label><input class="fl" value="587"></div><div style="padding-bottom:4px;display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);white-space:nowrap"><div class="sw sw-off" style="width:28px;height:16px"><div class="sw-d" style="width:12px;height:12px;top:2px;left:2px"></div></div>SSL</div></div></div>
+      <div class="smtp-g" style="margin-bottom:12px"><div class="fg" style="margin-bottom:0"><label class="fl-l">Usuario</label><input class="fl" value="notif@jospina.net"></div><div class="fg" style="margin-bottom:0"><label class="fl-l">Contraseña</label><input class="fl" type="password" value="apppassword"></div></div>
+      <div class="smtp-g" style="margin-bottom:14px"><div class="fg" style="margin-bottom:0"><label class="fl-l">Nombre remitente</label><input class="fl" value="Ticketin Soporte"></div><div class="fg" style="margin-bottom:0"><label class="fl-l">Correo remitente</label><input class="fl" value="noreply@jospina.net"></div></div>
+      <div style="display:flex;gap:8px;margin-bottom:14px"><button class="btn btn-p btn-sm">Guardar configuración</button><button class="btn btn-sm">Probar conexión</button></div>
+      <div style="border-top:1px solid var(--border);padding-top:12px"><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">Enviar correo de prueba</div><div style="display:flex;gap:8px"><input class="fl" style="max-width:250px;padding:5px 10px" placeholder="correo@ejemplo.com"><button class="btn btn-sm">Enviar prueba</button></div></div>
+    </div>
+    <div id="at2" style="display:none">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-sm">↺ Actualizar</button></div>
+      <table><thead><tr><th>Fecha</th><th>Usuario</th><th>Acción</th><th>Tabla</th><th>Registro</th></tr></thead><tbody>
+        <tr><td style="font-size:12px;color:var(--muted)">16/03 10:45</td><td>1</td><td><span class="chip" style="background:#173404;color:var(--success);font-size:10px">INSERT</span></td><td><code style="font-size:11px;color:var(--info)">comentarios</code></td><td>52</td></tr>
+        <tr><td style="font-size:12px;color:var(--muted)">16/03 09:45</td><td>3</td><td><span class="chip" style="background:#412402;color:var(--warning);font-size:10px">UPDATE</span></td><td><code style="font-size:11px;color:var(--info)">solicitudes</code></td><td>48</td></tr>
+        <tr><td style="font-size:12px;color:var(--muted)">15/03 17:20</td><td>1</td><td><span class="chip" style="background:#501313;color:var(--error);font-size:10px">DELETE</span></td><td><code style="font-size:11px;color:var(--info)">adjuntos</code></td><td>12</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+<script>
+const R={admin:{n:'Javier Ospina',b:'Administrador',bc:'b-admin',av:'JO',pgs:['dash','tickets','detalle','nueva','nueva2','usuarios','ans','reportes','admin']},agente:{n:'Carolina Sanchez',b:'Agente',bc:'b-agente',av:'CS',pgs:['dash','tickets','detalle','ans']},solic:{n:'Juan Sanchez',b:'Solicitante',bc:'b-solic',av:'JS',pgs:['dash','tickets','detalle','nueva','nueva2']}};
+let rol='admin',cur='dash';
+function setRol(r,el){rol=r;const d=R[r];document.getElementById('unm').textContent=d.n;const ub=document.getElementById('ubg');ub.textContent=d.b;ub.className='u-badge '+d.bc;document.getElementById('avt').textContent=d.av;document.getElementById('nrl').textContent=d.b;document.querySelectorAll('.r-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');['ni-usr','ni-rep','ni-adm'].forEach(id=>{document.getElementById(id).style.display=r==='admin'?'flex':'none';});document.getElementById('ni-ans').style.display=r==='solic'?'none':'flex';const bn=document.getElementById('btn-nva');if(bn)bn.style.display=r==='agente'?'none':'';const ba=document.getElementById('btn-asig');if(ba)ba.style.display=r==='admin'?'':'none';const dz=document.getElementById('dz-area');if(dz)dz.style.display=r==='solic'?'none':'';go(d.pgs.includes(cur)?cur:'dash');}
+function go(pg){const d=R[rol];if(!d.pgs.includes(pg))return;cur=pg;document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));const el=document.getElementById('pg-'+pg);if(el)el.classList.add('on');document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('on'));const m={dash:'dash',tickets:'tickets',detalle:'tickets',nueva:'tickets',nueva2:'tickets',usuarios:'usuarios',ans:'ans',reportes:'reportes',admin:'admin'};const t=m[pg]||pg;document.querySelectorAll('.nav-item').forEach(n=>{if(n.textContent.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(t.replace(/[éó]/g,c=>c==='é'?'e':'o')))n.classList.add('on');});}
+function atab(i,el){[0,1,2].forEach(j=>{document.getElementById('at'+j).style.display=j===i?'block':'none';});document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');}
+</script>
+</body>
+</html>
