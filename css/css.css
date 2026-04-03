@@ -230,6 +230,9 @@ h2 em { font-style: italic; color: var(--accent); }
   background: rgba(255,255,255,0.04); color: var(--muted);
   border: 1px solid var(--border);
 }
+.proyecto-techs-titulos {
+  font-size: 0.7rem;font-style: oblique; text-decoration: underline; font-weight: bold; color: var(--muted);
+}
 .proyecto-enlace {
   font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--accent); text-decoration: none;
